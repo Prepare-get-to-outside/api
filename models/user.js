@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.MyList, {
+        foreignKey: "user_cd",
+        sourceKey: 'user_cd',
+        // onUpdate: defaults to CASCADE
+        onDelete: "cascade",
+      });
     }
   }
   User.init({
@@ -22,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     user_id: {
       type: DataTypes.STRING(30),
-      allowNull : false
+      allowNull: false,
+      unique: true
       // allowNull defaults to true
     },
     user_nm: {

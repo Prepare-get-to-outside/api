@@ -11,7 +11,6 @@ exports.create = ({body}, res, next) => {
     });
     return;
   }
-  console.log(body)
   // Create a Tutorial
   const restaurant = {
     rest_cd: body.rest_cd,
@@ -33,7 +32,7 @@ exports.create = ({body}, res, next) => {
       });
     });
 };
-// Retrieve all user from the database.
+// Retrieve all from the database.
 exports.findAll = (req, res) => {
   Restaurant.findAll()
     .then(data => {
@@ -46,7 +45,7 @@ exports.findAll = (req, res) => {
       });
     });
 };
-// Find a single user with an id
+// Find a single with an id
 exports.findOne = (req, res) => {
   const rest_cd = req.params.rest_cd;
   Restaurant.findByPk(rest_cd)
@@ -65,14 +64,13 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a user by the id in the request
+// Update by the id in the request
 exports.update = (req, res) => {
   const rest_cd = req.params.rest_cd;
   Restaurant.update(req.body, {
     where: { rest_cd: rest_cd }
   })
     .then(num => {
-      console.log(num)
       if (num == 1) {
         res.send({
           message: "Restaurant was updated successfully."
@@ -89,7 +87,7 @@ exports.update = (req, res) => {
       });
     });
 };
-// Delete a user with the specified id in the request
+// Delete with the specified id in the request
 exports.delete = (req, res) => {
   const rest_cd = req.params.rest_cd;
   Restaurant.destroy({
