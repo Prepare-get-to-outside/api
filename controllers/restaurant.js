@@ -2,6 +2,7 @@ const { v1: uuidv1 } = require("uuid");
 const db = require("../models");
 const Restaurant = db.restaurant;
 const MyListInfo = db.myListInfo;
+const { sequelize } = require("../models");
 
 exports.create = (req, res) => {
   if (!req.body.rest_nm) {
@@ -29,6 +30,8 @@ exports.create = (req, res) => {
     share_list_cd: req.body?.share_list_cd,
   };
 
+  //   try {
+  // await sequelize.transaction(async (t) => {
   Restaurant.create(rest)
     .then((data) => {
       res.send({
@@ -43,8 +46,13 @@ exports.create = (req, res) => {
       });
     });
 
-  //TODO: 여기서 error 발생하면 어떻게 처리 해야 하지?
   MyListInfo.create(myListInfo);
+  // });
+  //   } catch (error) {
+  //     return res.status(500).send({
+  //       message: "error: " + error,
+  //     });
+  //   }
 };
 
 exports.findAll = (req, res) => {

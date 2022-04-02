@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Restaurant.init(
     {
       rest_cd: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.NUMBER,
         allowNull: false,
         primaryKey: true,
       },
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       rest_lat: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(1),
         allowNull: true,
       },
       rest_lon: {

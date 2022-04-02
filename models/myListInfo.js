@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       tag_cd: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(1),
         allowNull: true,
       },
       share_list_cd: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(1),
         allowNull: true,
       },
     },
