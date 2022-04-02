@@ -46,7 +46,6 @@ exports.findOne = async (req, res) => {
         attributes :['rest_nm'],
         required: true
       }
-
       ],
       where: { user_cd: params.user_cd }
     })
@@ -88,7 +87,7 @@ exports.update = async (req, res) => {
 
 // mylist 삭제
 exports.delete = async (req, res) => {
-  const user_cd = req.params.user_cd;
+  const params = req.body
 
   try {
     await sequelize.transaction(async (transaction) => {
@@ -96,13 +95,13 @@ exports.delete = async (req, res) => {
         where: { user_cd: params.user_cd, rest_cd: params.rest_cd }
       })
 
-      if (num == 1) {
+      if (result == 1) {
         res.send({
-          message: "User was deleted successfully!"
+          message: "Mylist was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete User with user_cd=${user_cd}. Maybe User was not found!`
+          message: `Cannot delete Mylist. Maybe Mylist was not found! params :` + JSON.stringify(params) 
         });
       }
     })
