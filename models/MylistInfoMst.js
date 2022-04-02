@@ -11,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.UserInfoMst,{
+        foreignKey: "user_cd",
+      })
+
+      this.belongsTo(models.RestInfoMst,{
+        foreignKey: "rest_cd",
+      })
     }
   }
   MylistInfoMst.init({
@@ -23,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     rest_cd: {
       type: DataTypes.STRING(100),
       allowNull : false,
-      primaryKey: true
+      unique : true
     },
     rest_tp: {
       type: DataTypes.STRING(3),

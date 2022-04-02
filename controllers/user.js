@@ -3,7 +3,7 @@ const User = db.UserInfoMst;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new user
-exports.create = (req, res, next) => {
+exports.create = async(req, res, next) => {
     // Validate request
   if (!req.body.user_cd || !req.body.user_id) {
     res.status(400).send({
@@ -17,30 +17,29 @@ exports.create = (req, res, next) => {
     user_id: req.body.user_id,
     user_nm: req.body.user_nm
   };
-  // Save Tutorial in the database
-  User.create(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the User."
-      });
+  try{
+    // Save Tutorial in the database
+    const result = await User.create(user)
+    res.send(result);
+  }catch(error){
+    res.status(500).send({
+      message:
+      error.message || "Some error occurred while creating the User."
     });
+  }
 };
 // Retrieve all user from the database.
-exports.findAll = (req, res) => {
-  User.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
+exports.findAll = async(req, res) => {
+  try{
+    // Save Tutorial in the database
+    const result = await User.findAll()
+    res.send(result);
+  }catch(error){
+    res.status(500).send({
+      message:
+      error.message || "Some error occurred while retrieving tutorials."
     });
+  }
 };
 // Find a single user with an id
 exports.findOne = (req, res) => {
