@@ -43,9 +43,14 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-console.log("path : ", path.join(__dirname, "myListInfo"));
-db.myListInfo = require("./myListInfo.js")(sequelize, Sequelize);
-db.restaurant = require("./restaurant.js")(sequelize, Sequelize);
+db.myListInfo = require(path.join(__dirname, "myListInfo"))(
+  sequelize,
+  Sequelize
+);
+db.restaurant = require(path.join(__dirname, "restaurant"))(
+  sequelize,
+  Sequelize
+);
 
 //restaurant : myListInfo = 1:1
 db.restaurant.hasOne(db.myListInfo, {
