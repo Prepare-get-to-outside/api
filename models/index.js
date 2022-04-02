@@ -48,6 +48,10 @@ db.myListInfo = require("./myListInfo.js")(sequelize, Sequelize);
 db.restaurant = require("./restaurant.js")(sequelize, Sequelize);
 
 //restaurant : myListInfo = 1:1
-db.restaurant.hasOne(db.myListInfo, { hooks: true, foreignKey: "rest_cd" });
+db.restaurant.hasOne(db.myListInfo, {
+  hooks: true,
+  foreignKey: "rest_cd",
+  as: "myListInfo",
+});
 
 module.exports = db;

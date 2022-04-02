@@ -43,11 +43,20 @@ exports.create = (req, res) => {
       });
     });
 
+  //TODO: 여기서 error 발생하면 어떻게 처리 해야 하지?
   MyListInfo.create(myListInfo);
 };
 
 exports.findAll = (req, res) => {
-  Restaurant.findAll()
+  Restaurant.findAll({
+    include: [
+      {
+        as: "myListInfo",
+        model: MyListInfo,
+        attributes: ["visit_yn", "rmk_dc", "tag_cd", "share_list_cd"],
+      },
+    ],
+  })
     .then((data) => {
       res.send({
         status: 200,
