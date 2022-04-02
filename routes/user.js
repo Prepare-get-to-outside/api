@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const {User : user } = require("../models")
-// const sequelize = require("sequelize");
 const user_controller = require("../controllers/user.js");
 
 /* GET users listing. */
