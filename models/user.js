@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     insert_dt: {
       type: DataTypes.DATE,
-      // defaultValue: DataTypes.NOW
+      defaultValue: DataTypes.NOW //literal('CURRENT_TIMESTAMP'),
       // allowNull defaults to true
     },
     update_dt: {

@@ -4,17 +4,20 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Restaurant extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
       this.hasMany(models.MyList, {
         foreignKey: "rest_cd",
         sourceKey: 'rest_cd',
-        // onUpdate: defaults to CASCADE
+        onDelete: "cascade",
+      });
+      this.hasMany(models.FavorList, {
+        foreignKey: "rest_cd",
+        sourceKey: 'rest_cd',
+        onDelete: "cascade",
+      });
+      this.hasMany(models.TagList, {
+        foreignKey: "rest_cd",
+        sourceKey: 'rest_cd',
         onDelete: "cascade",
       });
     }
@@ -33,8 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     rest_lat: {
       type: DataTypes.STRING(30),
       allowNull: false
-      //type: DataTypes.DATE,
-      // defaultValue: DataTypes.NOW
     },
     rest_lon: {
       type: DataTypes.STRING(30),
