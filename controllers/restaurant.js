@@ -4,7 +4,7 @@ const Restaurant = db.restaurant;
 const MyListInfo = db.myListInfo;
 const { sequelize } = require("../models");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   if (!req.body.rest_nm) {
     res.status(400).send({
       message: "parameter validation error",
@@ -30,29 +30,29 @@ exports.create = (req, res) => {
     share_list_cd: req.body?.share_list_cd,
   };
 
-  //   try {
-  // await sequelize.transaction(async (t) => {
-  Restaurant.create(rest)
-    .then((data) => {
-      res.send({
-        status: 200,
-        data,
-      });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating Restaurant.",
-      });
-    });
+  try {
+    await sequelize.transaction(async (t) => {
+      Restaurant.create(rest)
+        .then((data) => {
+          res.send({
+            status: 200,
+            data,
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating Restaurant.",
+          });
+        });
 
-  MyListInfo.create(myListInfo);
-  // });
-  //   } catch (error) {
-  //     return res.status(500).send({
-  //       message: "error: " + error,
-  //     });
-  //   }
+      MyListInfo.create(myListInfo);
+    });
+  } catch (error) {
+    return res.status(500).send({
+      message: "error: " + error,
+    });
+  }
 };
 
 exports.findAll = (req, res) => {
@@ -64,6 +64,7 @@ exports.findAll = (req, res) => {
         attributes: ["visit_yn", "rmk_dc", "tag_cd", "share_list_cd"],
       },
     ],
+    raw: true,
   })
     .then((data) => {
       res.send({
