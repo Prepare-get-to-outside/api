@@ -2,10 +2,15 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class RestaurantInfo extends Model {
-    static associate(models) {}
+  class RestInfo extends Model {
+    static associate(models) {
+      this.hasOne(models.Code, {
+        sourceKey: "code",
+        foreignKey: "code",
+      });
+    }
   }
-  RestaurantInfo.init(
+  RestInfo.init(
     {
       rest_cd: {
         type: DataTypes.NUMBER,
@@ -18,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       code: {
         type: DataTypes.STRING(10),
-        allowNull: true,
+        allowNull: false,
       },
     },
     {
@@ -27,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "restaurant_info_mst", // 테이블 이름 정의
       timestamps: true,
       sequelize,
-      modelName: "RestaurantInfo",
+      modelName: "RestInfo",
     }
   );
 
-  return RestaurantInfo;
+  return RestInfo;
 };

@@ -34,12 +34,6 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
@@ -51,7 +45,18 @@ db.restaurant = require(path.join(__dirname, "restaurant"))(
   sequelize,
   Sequelize
 );
+db.restInfo = require(path.join(__dirname, "restInfo"))(sequelize, Sequelize);
+db.code = require(path.join(__dirname, "code"))(sequelize, Sequelize);
+db.groupListInfo = require(path.join(__dirname, "groupListInfo"))(
+  sequelize,
+  Sequelize
+);
 
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 //restaurant : myListInfo = 1:1
 db.restaurant.hasOne(db.myListInfo, {
   hooks: true,

@@ -7,12 +7,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   GroupList.init(
     {
-      group_cd: {
+      grp_cd: {
         type: DataTypes.STRING(30),
         primaryKey: true,
         allowNull: false,
       },
-      group_name: {
+      grp_name: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },

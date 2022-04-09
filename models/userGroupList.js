@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   UserGroupList.init(
     {
-      group_cd: {
+      grp_cd: {
         type: DataTypes.STRING(30),
         primaryKey: true,
         allowNull: false,

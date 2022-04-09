@@ -3,7 +3,12 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class GroupListInfo extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasOne(models.RestInfo, {
+        sourceKey: "rest_cd",
+        foreignKey: "rest_cd",
+      });
+    }
   }
   GroupListInfo.init(
     {
@@ -12,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      group_cd: {
+      grp_cd: {
         type: DataTypes.STRING(30),
         primaryKey: true,
         allowNull: false,

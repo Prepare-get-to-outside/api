@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      group_cd: {
+      grp_cd: {
         type: DataTypes.STRING(30),
         primaryKey: true,
         allowNull: false,
