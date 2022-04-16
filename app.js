@@ -4,10 +4,11 @@ const path = require("path"); // path 경로
 const cookieParser = require("cookie-parser"); // cookie 파서
 const bodyParser = require("body-parser"); //body 파서
 const logger = require("morgan"); // express 로그
+const app = express(); // express 선언
 // models sequelize 처리
-const { sequelize } = require("./models");
+const db = require("./models");
 // 테이블
-sequelize
+db.sequelize
   .sync()
   .then(() => {
     console.log(" DB Connection success.");
@@ -19,9 +20,7 @@ sequelize
   });
 
 const indexRouter = require("./routes/index"); //routes index.js
-const usersRouter = require("./routes/user"); //
-
-const app = express(); // express 선언
+const usersRouter = require("./routes/user");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views")); // express views
