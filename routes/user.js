@@ -1,19 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-// const {User : user } = require("../models")
-// const sequelize = require("sequelize");
 const user_controller = require("../controllers/user.js");
 
 /* GET users listing. */
 // get, post, put, delete 개발
-router.post('/', user_controller.create);
+router.post("/", user_controller.create);
 
-router.get('/', user_controller.findAll);
+router.get("/", user_controller.findAll);
 
-router.get('/:user_cd', user_controller.findOne);
+router.get("/:user_cd", user_controller.findOne);
 
-router.put('/:user_cd', user_controller.update);
+router.put("/:user_cd", user_controller.update);
 
-router.delete('/:user_cd', user_controller.delete);
+router.delete("/:user_cd", user_controller.delete);
 
 module.exports = router;
