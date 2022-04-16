@@ -1,43 +1,41 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class UserGroup extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasOne(models.User, {
+        foreignKey: "user_cd",
+      });
+      //   this.hasMany(models.groupMst);
     }
   }
-  User.init(
+  UserGroup.init(
     {
       // Model attributes are defined here
       user_cd: {
         type: DataTypes.STRING(20),
         allowNull: false,
-        primaryKey: true,
+        // primaryKey: true,
       },
-      user_id: {
-        type: DataTypes.STRING(30),
+      grp_cd: {
+        type: DataTypes.STRING(20),
         allowNull: false,
-        // allowNull defaults to true
-      },
-      user_nm: {
-        type: DataTypes.STRING(30),
-        // allowNull : false
         // allowNull defaults to true
       },
     },
     {
       // Other model options go here
       charset: "utf8", // 한국어 설정
-      tableName: "user_mst", // 테이블 이름 정의
+      tableName: "user_group", // 테이블 이름 정의
       timestamps: true,
       sequelize,
-      modelName: "User",
+      modelName: "UserGroup",
     }
   );
-  return User;
+  return UserGroup;
 };

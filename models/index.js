@@ -52,6 +52,8 @@ db.groupListInfo = require(path.join(__dirname, "groupListInfo"))(
   Sequelize
 );
 
+db.groupMst = require(path.join(__dirname, "groupMst"))(sequelize, Sequelize);
+
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

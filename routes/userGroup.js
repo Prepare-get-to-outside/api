@@ -1,0 +1,19 @@
+const express = require("express");
+const router = express.Router();
+const cors = require("cors");
+const user_group_controller = require("../controllers/userGroup.js");
+
+router.use(cors());
+
+// get, post, put, delete 개발
+router.post("/", user_group_controller.create);
+
+router.get("/", user_group_controller.findAll);
+
+// router.get('/:user_cd', user_controller.findOne);
+
+// router.put('/:user_cd', user_controller.update);
+
+// router.delete('/:user_cd', user_controller.delete);
+
+module.exports = router;
