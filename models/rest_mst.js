@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     });
     db.RestMst.belongsToMany(db.TagMst, {
       through: "rest_group_tag",
-      as: "rgt.rest_cd",
-      foreignKey: "rest_cd",
+      // as: "rgt.rest_cd",
+      // foreignKey: "rest_cd",
     });
   };
   return RestMst;
