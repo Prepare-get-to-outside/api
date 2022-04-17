@@ -51,8 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     });
     db.GroupMst.belongsToMany(db.TagMst, {
       through: "rest_group_tag",
-      as: "rgt.grp_cd",
-      foreignKey: "grp_cd",
+      // as: "rgt.grp_cd",
+      // foreignKey: "grp_cd",
     });
   };
   return GroupMst;
