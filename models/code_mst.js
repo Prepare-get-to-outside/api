@@ -35,7 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   CodeMst.associate = (db) => {
-    db.CodeMst.hasMany(db.RestMst);
+    db.CodeMst.hasMany(db.RestMst, {
+      sourcekey: "code_cd",
+      foreignKey: "address_cd",
+    });
   };
   return CodeMst;
 };

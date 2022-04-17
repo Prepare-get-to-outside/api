@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     db.RestMst.belongsTo(db.CodeMst, {
       as: "rm.address_cd",
       foreignKey: "address_cd",
+      targetkey: "code_cd",
     });
     db.RestMst.belongsToMany(db.GroupMst, {
       through: "rest_group",
