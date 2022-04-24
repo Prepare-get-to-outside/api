@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class UserInfoMst extends Model {
+  class UserGroup extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,45 +11,34 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.MylistInfoMst, {
+      this.belongsTo(models.UserMst, {
         foreignKey: "user_cd",
-        sourceKey: 'user_cd',
+        targetKey: "user_cd",
+      })
+      this.belongsTo(models.GroupMst, {
+        foreignKey: "grp_cd",
+        targetKey: "grp_cd",
       })
     }
   }
-  UserInfoMst.init({
+  UserGroup.init({
     // Model attributes are defined here
     user_cd: {
       type: DataTypes.STRING(20),
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
+    grp_cd: {
       type: DataTypes.STRING(30),
       allowNull : false
-      // allowNull defaults to true
     },
-    user_nm: {
-      type: DataTypes.STRING(30),
-      // allowNull : false
-      // allowNull defaults to true
-    },
-    insert_dt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-      // allowNull defaults to true
-    },
-    update_dt: {
-      type: DataTypes.DATE
-      // allowNull defaults to true
-    }
   }, {
     // Other model options go here
     charset: "utf8", // 한국어 설정
-    tableName: "user_info_mst", // 테이블 이름 정의
-    timestamps: false,
+    tableName: "user_group", // 테이블 이름 정의
+    timestamps: true,
     sequelize,
-    modelName: 'UserInfoMst',
+    modelName: 'UserGroup',
   });
-  return UserInfoMst;
+  return UserGroup;
 };

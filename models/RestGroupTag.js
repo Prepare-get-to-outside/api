@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class RestTag extends Model {
+  class RestGroupTag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,41 +11,53 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.TagMst,{
+        foreignKey: "tag_cd",
+        targetKey: "tag_cd"
+      })
+
+      this.belongsTo(models.RestMst,{
+        foreignKey: "rest_cd",
+        targetKey: "rest_cd"
+      })
+
+      this.belongsTo(models.GroupMst,{
+        foreignKey: "grp_cd",
+        targetKey: "grp_cd"
+      })
     }
   }
-  RestTag.init({
+  RestGroupTag.init({
     // Model attributes are defined here
-    rest_cd: {
+    tag_cd: {
       type: DataTypes.STRING(100),
       allowNull : false,
       primaryKey: true
     },
-    tag_nm: {
+    rest_cd: {
       type: DataTypes.STRING(3),
-      allowNull : false
+      allowNull : false,
+      primaryKey: true
+    },
+    grp_cd: {
+      type: DataTypes.STRING(3),
+      allowNull : false,
+      primaryKey: true
     },
     insert_id: {
       type: DataTypes.STRING(30),
       allowNull : false
     },
-    insert_dt: {
-      type: DataTypes.DATE,
-      allowNull : false,
-      defaultValue: DataTypes.NOW
-    },
     update_id: {
       type: DataTypes.STRING(30),
-    },
-    update_dt: {
-      type: DataTypes.DATE
     }
   }, {
     // Other model options go here
     charset: "utf8", // 한국어 설정
-    tableName: "rest_tag", // 테이블 이름 정의
-    timestamps: false,
+    tableName: "rest_group_tag", // 테이블 이름 정의
+    timestamps: true,
     sequelize,
-    modelName: 'RestTag',
+    modelName: 'RestGroupTag',
   });
-  return RestTag;
+  return RestGroupTag;
 };

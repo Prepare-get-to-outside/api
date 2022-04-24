@@ -1,8 +1,9 @@
 const db = require("../models")
-const MylistInfoMst = db.MylistInfoMst;
+// const MylistInfoMst = db.MylistInfoMst;
 const sequelize = db.sequelize;
-const UserInfoMst = db.UserInfoMst
-const RestInfoMst = db.RestInfoMst
+const UserInfoMst = db.UserMst
+const RestInfoMst = db.RestMst
+const GroupInfoMst = db.GroupMst
 
 // mylist 맛집 등록
 exports.create = async (req, res, next) => {
@@ -19,8 +20,16 @@ exports.create = async (req, res, next) => {
   try {
     // managed transaction으로 트랜잭션 처리
     await sequelize.transaction(async (transaction) => {
-      // 마이리스트 등록
-      const result = await MylistInfoMst.create(params, { transaction })
+      // 1.사용자정보 조회후 그룹등록(기본적으로 사원생성시 그룹정보에 mylist 생성)
+      const user_info = await UserInfoMst.findByPk()
+      // 1.그룹정보 등록
+
+      // 1.맛집 등록(기본 마이리스트 등록)
+      const result = await GroupInfoMst.create(params, { transaction })
+
+      // 2.공유목록 등록
+
+      // 3.태그 등록
 
       res.send(result)
     })

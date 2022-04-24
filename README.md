@@ -51,3 +51,9 @@ app.js
 
 # 추후 구조 변경(나중에 하자)
 https://github.com/santiq/bulletproof-nodejs/tree/master/src
+
+# 트랜잭션
+https://sequelize.org/v3/docs/transactions/
+
+# 테이블 관계 및 join
+https://sequelize.org/v3/docs/associations/

@@ -20,6 +20,8 @@ sequelize
 
 var indexRouter = require('./routes/index'); //routes index.js
 var usersRouter = require('./routes/user'); //
+var groupRouter = require('./routes/group'); //
+var tagRouter = require('./routes/tag'); //
 var restaurantRouter = require('./routes/restaurant'); //
 var mylistRouter = require('./routes/mylist'); //
 
@@ -38,8 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/group', groupRouter);
+app.use('/tag', tagRouter);
 app.use('/restaurant', restaurantRouter);
-app.use('/mylist', mylistRouter);
+// app.use('/mylist', mylistRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
