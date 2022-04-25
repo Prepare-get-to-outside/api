@@ -1,33 +1,52 @@
 const db = require("../models")
-const User = db.User;
-const Op = db.Sequelize.Op;
+const User = db.UserMst;
+const UserSevice = require("../services/user");
+// const Op = db.Sequelize.Op;
 
 // Create and Save a new user
-exports.create = (req, res, next) => {
-    // Validate request
-  if (!req.body.user_cd || !req.body.user_id) {
-    res.status(400).send({
+exports.create = async (req, res, next) => {
+  
+  const param = req.body;
+  
+  try {
+    const userSevice = new UserSevice();
+
+    const result = await userSevice.createUser(param)
+
+    console.log('2 >>>>', result)
+
+    res.status(result.status ?? 500).send(result.data ? result.data : {
       message: "parameter is validation error!"
     });
-    return;
+
+  } catch (e) {
+    console.log('3 >>>>', e)
   }
-  // Create a Tutorial
-  const user = {
-    user_cd: req.body.user_cd,
-    user_id: req.body.user_id,
-    user_nm: req.body.user_nm
-  };
-  // Save Tutorial in the database
-  User.create(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the User."
-      });
-    });
+
+    // Validate request
+  // if (!req.body.user_cd || !req.body.user_id) {
+  //   res.status(400).send({
+  //     message: "parameter is validation error!"
+  //   });
+  //   return;
+  // }
+  // // Create a Tutorial
+  // const user = {
+  //   user_cd: req.body.user_cd,
+  //   user_id: req.body.user_id,
+  //   user_nm: req.body.user_nm
+  // };
+  // // Save Tutorial in the database
+  // User.create(user)
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the User."
+  //     });
+  //   });
 };
 // Retrieve all user from the database.
 exports.findAll = (req, res) => {

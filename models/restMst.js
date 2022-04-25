@@ -2,27 +2,25 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class Restaurant extends Model {
+  class RestMst extends Model {
     static associate(models) {
-      this.hasMany(models.MyList, {
+      
+      this.hasMany(models.RestGroup, {
         foreignKey: "rest_cd",
         sourceKey: 'rest_cd',
         onDelete: "cascade",
       });
-      this.hasMany(models.FavorList, {
-        foreignKey: "rest_cd",
-        sourceKey: 'rest_cd',
-        onDelete: "cascade",
-      });
-      this.hasMany(models.TagList, {
+      
+      this.hasMany(models.RestGroupTag, {
         foreignKey: "rest_cd",
         sourceKey: 'rest_cd',
         onDelete: "cascade",
       });
     }
   }
-  Restaurant.init({
+  RestMst.init({
     // Model attributes are defined here
     rest_cd: {
       type: DataTypes.STRING(20),
@@ -51,10 +49,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     // Other model options go here
     charset: "utf8", // 한국어 설정
-    tableName: "rest_info_mst", // 테이블 이름 정의
+    tableName: "rest_mst", // 테이블 이름 정의
     timestamps: false,
     sequelize,
-    modelName: 'Restaurant',
+    modelName: 'RestMst',
   });
-  return Restaurant;
+  return RestMst;
 };

@@ -1,7 +1,10 @@
-const {sequelize} = require("./../models")
+const {sequelize} = require("../models")
 const db = require("../models")
 const MyList = db.MyList;
 const Restaurant = db.Restaurant;
+const Tag = db.Tag;
+const TagList = db.TagList;
+const restaurant = require('./restaurant')
 
 // Create and Save a new user
 exports.create = async (req, res, next) => {
@@ -20,6 +23,14 @@ exports.create = async (req, res, next) => {
  
       //// 이 쿼리를 트랜잭션 처리
       const isRestaurant = await Restaurant.findByPk(rest_cd, { transaction: t });
+
+      if (!isRestaurant) {
+        const result = await restaurant.insertData(req.body)
+        console.log("result >>> ", result)
+        if (result.status !== 200) {
+          t.rollback()
+        }
+      }
       
       // Create a Tutorial
       const my_list = {

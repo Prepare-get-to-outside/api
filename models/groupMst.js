@@ -6,12 +6,20 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
     static associate(models) {
-      this.hasMany(models.FavorList, {
+
+      this.hasMany(models.UserGroup, {
         foreignKey: "grp_cd",
         sourceKey: 'grp_cd',
         onDelete: "cascade",
       });
-      this.hasMany(models.TagList, {
+
+      this.hasMany(models.RestMst, {
+        foreignKey: "grp_cd",
+        sourceKey: 'grp_cd',
+        onDelete: "cascade",
+      });
+      
+      this.hasMany(models.RestGroupTag, {
         foreignKey: "grp_cd",
         sourceKey: 'grp_cd',
         onDelete: "cascade",
@@ -20,12 +28,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   Group.init({
     grp_cd: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true,
     },
     grp_nm: {
       type: DataTypes.STRING(30),
+    },
+    is_mylist: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     },
     insert_dt: {
       type: DataTypes.DATE,
@@ -33,10 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     charset: "utf8", // 한국어 설정
-    tableName: "group_list",
+    tableName: "group_mst",
     timestamps: false,
     sequelize,
-    modelName: 'Group',
+    modelName: 'GroupMst',
   });
   return Group;
 };

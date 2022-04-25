@@ -2,35 +2,47 @@ const db = require("../models")
 const Restaurant = db.Restaurant;
 // const Op = db.Sequelize.Op;
 
-// Create and Save a new user
-exports.create = ({body}, res, next) => {
-    // Validate request
-  if ([body.rest_cd, body.rest_nm, body.rest_lat, body.rest_lon, body.price].includes(undefined)) {
-    res.status(400).send({
-      message: "parameter is validation error!"
-    });
-    return;
+
+exports.insertData = async (params) => {
+  const {rest_cd, rest_nm, rest_lat, rest_lon, price, memo} = params
+
+  if ([rest_cd, rest_nm, rest_lat, rest_lon, price].includes(undefined)) {
+    
+    return {isError: true, status: 400, errorMsg:  "parameter is validation error!"};
   }
-  // Create a Tutorial
+
   const restaurant = {
-    rest_cd: body.rest_cd,
-    rest_nm: body.rest_nm,
-    rest_lat: body.rest_lat,
-    rest_lon: body.rest_lon,
-    price: Number(body.price),
-    memo: body.memo ?? ''
+    rest_cd,
+    rest_nm,
+    rest_lat,
+    rest_lon,
+    price,
+    memo: memo ?? ''
   };
-  // Save Tutorial in the database
-  Restaurant.create(restaurant)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Restaurant."
-      });
+
+
+  try {
+    const result = await Restaurant.create(restaurant)
+
+    return{isError: false, status: 200, data: result};
+  } catch (err) {
+    return {isError: true, status: 500, errorMsg: err.message || "Some error occurred while creating the Restaurant."};
+  }
+}
+
+
+// Create and Save a new user
+exports.create = async ({ body }, res, next) => {
+  const insertResult = await this.insertData(body)
+  
+  if (insertResult.status === 200) {
+    await res.send(insertResult.data); 
+  } else {
+    await res.status(insertResult.status).send({
+      message: insertResult.errorMsg ?? ''
     });
+  }
+
 };
 // Retrieve all from the database.
 exports.findAll = (req, res) => {

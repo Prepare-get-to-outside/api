@@ -2,42 +2,43 @@
 const {
   Model
 } = require('sequelize');
-// const Sequelize = require('sequelize'); // 
 
 module.exports = (sequelize, DataTypes) => {
-  class FavorList extends Model {
+  class UserGroup extends Model {
     static associate(models) {
-      this.belongsTo(models.Group, {
+
+      this.belongsTo(models.UserMst, {
+        foreignKey: "user_cd",
+        onDelete: "cascade",
+      });
+      
+      this.belongsTo(models.GroupMst, {
         foreignKey: "grp_cd",
         onDelete: "cascade",
       });
-        
-      this.belongsTo(models.Restaurant, {
-        foreignKey: "rest_cd",
-        onDelete: "cascade",
-      });
+
     }
   }
-  FavorList.init({
+  UserGroup.init({
     insert_dt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW 
     }
   }, {
     charset: "utf8", // 한국어 설정
-    tableName: "favor_list_info",
+    tableName: "user_group",
     timestamps: false,
     sequelize,
-    modelName: 'FavorList',
+    modelName: 'UserGroup',
     indexes: [
       {
         unique: true,
-        fields: ['grp_cd', 'rest_cd']
+        fields: ['user_cd','grp_cd']
       }
     ]
   });
 
-  FavorList.removeAttribute('id')
+  UserGroup.removeAttribute('id')
     
-  return FavorList;
+  return UserGroup;
 };
