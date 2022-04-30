@@ -10,19 +10,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.UserMst, {
-        as: "User",
+        as: "gm.user_cd",
         foreignKey: "user_cd",
         targetKey: "user_cd",
+      });
+      this.belongsToMany(models.UserMst, {
+        through: models.UserGroup,
+        as: "ug.grp_cd",
+        foreignKey: "grp_cd",
       });
       this.hasMany(models.UserGroup, {
         foreignKey: "grp_cd",
         sourceKey: "grp_cd",
       });
-      this.hasMany(models.RestGroup, {
+      this.belongsToMany(models.RestMst, {
+        through: models.RestGroup,
+        as: "rg.grp_cd",
         foreignKey: "grp_cd",
-        sourceKey: "grp_cd",
       });
-      this.hasMany(models.RestGroupTag, {
+      this.hasMany(models.RestGroup, {
         foreignKey: "grp_cd",
         sourceKey: "grp_cd",
       });
@@ -32,17 +38,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Model attributes are defined here
       grp_cd: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(20),
+        // type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
+        // autoIncrement: true,
       },
       grp_nm: {
         type: DataTypes.STRING(30),
-        allowNull: false,
-      },
-      user_cd: {
-        type: DataTypes.STRING(20),
         allowNull: false,
       },
       is_mylist: {

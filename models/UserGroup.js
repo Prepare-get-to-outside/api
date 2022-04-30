@@ -22,15 +22,6 @@ module.exports = (sequelize, DataTypes) => {
   UserGroup.init(
     {
       // Model attributes are defined here
-      user_cd: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        primaryKey: true,
-      },
-      grp_cd: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-      },
     },
     {
       // Other model options go here

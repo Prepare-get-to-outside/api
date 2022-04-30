@@ -17,28 +17,29 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "grp_cd",
         targetKey: "grp_cd",
       });
-      this.hasMany(models.RestGroupTag, {
-        foreignKey: "rest_cd",
-        targetKey: "rest_cd",
+
+      this.belongsToMany(models.TagMst, {
+        through: models.RestGroupTag,
+        // as: "rgt.rest_grp_cd",
+        // foreignKey: "rest_grp_cd",
       });
       this.hasMany(models.RestGroupTag, {
-        foreignKey: "grp_cd",
-        targetKey: "grp_cd",
+        // foreignKey: "rest_grp_cd",
+        // sourceKey: "rest_grp_cd",
       });
     }
   }
   RestGroup.init(
     {
       // Model attributes are defined here
-      rest_cd: {
+      // rest_grp_cd: {
+      //   type: DataTypes.INTEGER,
+      //   primaryKey: true,
+      //   autoIncrement: true,
+      //   allowNull: false,
+      // },
+      temp_cd: {
         type: DataTypes.STRING(100),
-        allowNull: false,
-        primaryKey: true,
-      },
-      grp_cd: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-        primaryKey: true,
       },
     },
     {

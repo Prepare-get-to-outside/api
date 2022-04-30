@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.CodeMst, {
-        foreignKey: "adress_code",
-        targetKey: "code",
+        as: "rm.address_cd",
+        foreignKey: "address_cd",
+        targetKey: "code_cd",
       });
-
-      this.hasMany(models.RestGroup, {
+      this.belongsToMany(models.GroupMst, {
+        through: models.RestGroup,
+        as: "rg.rest_cd",
         foreignKey: "rest_cd",
-        sourceKey: "rest_cd",
       });
-
-      this.hasMany(models.RestGroupTag, {
+      this.hasMany(models.RestGroup, {
         foreignKey: "rest_cd",
         sourceKey: "rest_cd",
       });
@@ -35,9 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       rest_nm: {
         type: DataTypes.STRING(30),
         allowNull: false,
-      },
-      adress_code: {
-        type: DataTypes.INTEGER,
       },
       rest_lat: {
         type: DataTypes.STRING(30),

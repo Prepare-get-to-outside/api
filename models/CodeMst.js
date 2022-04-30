@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.hasMany(models.RestMst, {
-        foreignKey: "adress_code",
-        sourceKey: "code",
+        foreignKey: "address_cd",
+        sourceKey: "code_cd",
       });
     }
   }
   CodeMst.init(
     {
       // Model attributes are defined here
-      code: {
+      code_cd: {
         type: DataTypes.STRING(10),
         allowNull: false,
         primaryKey: true,

@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.GroupMst, {
+        through: models.UserGroup,
+        as: "ug.user_cd",
+        foreignKey: "user_cd",
+      });
       this.hasMany(models.UserGroup, {
         foreignKey: "user_cd",
         sourceKey: "user_cd",
@@ -31,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.STRING(30),
         allowNull: false,
+        unique: true,
       },
       user_nm: {
         type: DataTypes.STRING(30),

@@ -14,42 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "tag_cd",
       });
 
-      this.belongsTo(models.RestMst, {
-        foreignKey: "rest_cd",
-        targetKey: "rest_cd",
-      });
-
-      this.belongsTo(models.GroupMst, {
-        foreignKey: "grp_cd",
-        targetKey: "grp_cd",
+      this.belongsTo(models.RestGroup, {
+        // foreignKey: "rest_grp_cd",
+        // targetKey: "rest_grp_cd",
       });
     }
   }
   RestGroupTag.init(
     {
       // Model attributes are defined here
-      tag_cd: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        primaryKey: true,
-      },
-      rest_cd: {
-        type: DataTypes.STRING(3),
-        allowNull: false,
-        primaryKey: true,
-      },
-      grp_cd: {
-        type: DataTypes.STRING(3),
-        allowNull: false,
-        primaryKey: true,
-      },
-      insert_id: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-      },
-      update_id: {
-        type: DataTypes.STRING(30),
-      },
     },
     {
       // Other model options go here

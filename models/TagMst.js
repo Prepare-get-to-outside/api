@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsToMany(models.RestGroup, {
+        through: models.RestGroupTag,
+        as: "rgt.tag_cd",
+        foreignKey: "tag_cd",
+      });
       this.hasMany(models.RestGroupTag, {
         foreignKey: "tag_cd",
         sourceKey: "tag_cd",
@@ -24,15 +29,8 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
       },
       tag_nm: {
-        type: DataTypes.STRING(3),
-        allowNull: false,
-      },
-      insert_id: {
         type: DataTypes.STRING(30),
         allowNull: false,
-      },
-      update_id: {
-        type: DataTypes.STRING(30),
       },
     },
     {
