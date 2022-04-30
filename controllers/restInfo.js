@@ -1,6 +1,7 @@
 const { v1: uuidv1 } = require("uuid");
 const db = require("../models");
 const RestaurantInfo = db.restInfo;
+const GroupInfo = db.groupMst;
 const Code = db.code;
 const { sequelize } = require("../models");
 
@@ -20,15 +21,17 @@ exports.create = async (req, res) => {
     code: req.body?.code,
   };
 
-  //   const code = {
-  //     code: req.body?.code,
-  //     name: req.body?.code_name,
-  //   };
+    const groupInfo = {
+      grp_cd: req.body?.grp_cd,
+    };
   try {
     await sequelize.transaction(async (t) => {
-      const response = await RestaurantInfo.create(rest);
+      let response = await RestaurantInfo.create(rest);
 
       //   Code.create(code);
+
+      response = await 
+      
 
       if (response) {
         res.send({
@@ -36,6 +39,7 @@ exports.create = async (req, res) => {
           data: response.dataValues,
         });
       }
+      
     });
   } catch (error) {
     return res.status(500).send({

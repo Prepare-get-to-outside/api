@@ -4,8 +4,9 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GroupMst extends Model {
     static associate(models) {
-      this.hasMany(models.UserGroup, {
+      this.belongsTo(models.UserGroup, {
         foreignKey: "grp_cd",
+        sourceKey: "grp_cd",
       });
     }
   }

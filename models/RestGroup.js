@@ -2,22 +2,22 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Code extends Model {
+  class RestGroup extends Model {
     static associate(models) {
-      this.belongsTo(models.RestInfo, {
-        sourceKey: "code",
-        foreignKey: "code",
+      this.hasMany(models.GroupMst, {
+        foreingKey: "grp_cd",
+        sourceKey: "grp_cd",
       });
     }
   }
-  Code.init(
+  RestGroup.init(
     {
-      code: {
-        type: DataTypes.STRING(10),
-        allowNull: false,
+      grp_cd: {
+        type: DataTypes.STRING(30),
         primaryKey: true,
+        allowNull: false,
       },
-      name: {
+      rest_cd: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
@@ -25,12 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Other model options go here
       charset: "utf8", // 한국어 설정
-      tableName: "common_code_mst", // 테이블 이름 정의
+      tableName: "rest_group", // 테이블 이름 정의
       timestamps: true,
       sequelize,
-      modelName: "Code",
+      modelName: "RestGroup",
     }
   );
 
-  return Code;
+  return RestGroup;
 };

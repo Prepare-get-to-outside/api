@@ -4,7 +4,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class RestInfo extends Model {
     static associate(models) {
-      this.hasOne(models.Code, {
+      this.hasMany(models.Code, {
         sourceKey: "code",
         foreignKey: "code",
       });

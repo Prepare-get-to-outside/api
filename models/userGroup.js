@@ -8,10 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasOne(models.User, {
-        foreignKey: "user_cd",
+      this.hasMany(models.User, {
+        foreignKey: "user_cd", //User table 의 pk
+        sourceKey: "user_cd", //UserGroup 의 fk
       });
-      //   this.hasMany(models.groupMst);
+
+      this.hasMany(models.GroupMst, {
+        foreignKey: "grp_cd",
+        sourceKey: "grp_cd",
+      });
     }
   }
   UserGroup.init(
