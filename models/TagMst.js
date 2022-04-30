@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class TagMst extends Model {
     /**
@@ -13,35 +11,38 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.RestGroupTag, {
         foreignKey: "tag_cd",
-        sourceKey: 'tag_cd',
-      })
+        sourceKey: "tag_cd",
+      });
     }
   }
-  TagMst.init({
-    // Model attributes are defined here
-    tag_cd: {
-      type: DataTypes.STRING(100),
-      allowNull : false,
-      primaryKey: true
+  TagMst.init(
+    {
+      // Model attributes are defined here
+      tag_cd: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        primaryKey: true,
+      },
+      tag_nm: {
+        type: DataTypes.STRING(3),
+        allowNull: false,
+      },
+      insert_id: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+      },
+      update_id: {
+        type: DataTypes.STRING(30),
+      },
     },
-    tag_nm: {
-      type: DataTypes.STRING(3),
-      allowNull : false
-    },
-    insert_id: {
-      type: DataTypes.STRING(30),
-      allowNull : false
-    },
-    update_id: {
-      type: DataTypes.STRING(30),
-    },
-  }, {
-    // Other model options go here
-    charset: "utf8", // 한국어 설정
-    tableName: "tag_mst", // 테이블 이름 정의
-    timestamps: true,
-    sequelize,
-    modelName: 'TagMst',
-  });
+    {
+      // Other model options go here
+      charset: "utf8", // 한국어 설정
+      tableName: "tag_mst", // 테이블 이름 정의
+      timestamps: true,
+      sequelize,
+      modelName: "TagMst",
+    }
+  );
   return TagMst;
 };

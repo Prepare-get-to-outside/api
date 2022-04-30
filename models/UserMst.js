@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class UserMst extends Model {
     /**
@@ -13,36 +11,39 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.UserGroup, {
         foreignKey: "user_cd",
-        sourceKey: 'user_cd',
-      })
+        sourceKey: "user_cd",
+      });
 
       this.hasMany(models.GroupMst, {
         foreignKey: "user_cd",
-        sourceKey: 'user_cd',
-      })
+        sourceKey: "user_cd",
+      });
     }
   }
-  UserMst.init({
-    // Model attributes are defined here
-    user_cd: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-      primaryKey: true
+  UserMst.init(
+    {
+      // Model attributes are defined here
+      user_cd: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        primaryKey: true,
+      },
+      user_id: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+      },
+      user_nm: {
+        type: DataTypes.STRING(30),
+      },
     },
-    user_id: {
-      type: DataTypes.STRING(30),
-      allowNull : false
-    },
-    user_nm: {
-      type: DataTypes.STRING(30),
+    {
+      // Other model options go here
+      charset: "utf8", // 한국어 설정
+      tableName: "user_mst", // 테이블 이름 정의
+      timestamps: true,
+      sequelize,
+      modelName: "UserMst",
     }
-  }, {
-    // Other model options go here
-    charset: "utf8", // 한국어 설정
-    tableName: "user_mst", // 테이블 이름 정의
-    timestamps: true,
-    sequelize,
-    modelName: 'UserMst',
-  });
+  );
   return UserMst;
 };
