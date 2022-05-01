@@ -29,7 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Model attributes are defined here
       user_cd: {
-        type: DataTypes.STRING(20),
+        // type: DataTypes.STRING(20),
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4, // Or DataTypes.UUIDV1
         allowNull: false,
         primaryKey: true,
       },
@@ -40,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_nm: {
         type: DataTypes.STRING(30),
+        allowNull: false,
       },
     },
     {

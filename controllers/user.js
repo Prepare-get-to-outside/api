@@ -7,19 +7,28 @@ const sequelize = db.sequelize;
 
 // Create and Save a new user
 exports.create = async (req, res, next) => {
+  const user_param = {
+    user_id: req.body.user_id,
+    user_nm: req.body.user_nm,
+  };
+
   // Validate request
-  if (!req.body.user_cd || !req.body.user_id) {
+  if (!user_param.user_id || !user_param.user_nm) {
     res.status(400).send({
       message: "parameter is validation error!",
     });
     return;
   }
-  try {
-    await sequelize.transaction(async (transaction) => {
-      // 1.사용자 확인
-      const res_user_chk = await User.findByPk(req.body.user_cd);
 
-      if (res_user_chk) {
+  try {
+    await sequelize.transaction(async (t) => {
+      // 1.사용자 확인
+      const is_user_match = await User.findOne({
+        where: { user_id: { [Op.eq]: user_param.user_id } },
+        transaction: t, // 이 쿼리를 트랜잭션 처리
+      });
+
+      if (is_user_match) {
         res.status(401).send({
           message: "Already Created User.",
         });
@@ -27,43 +36,44 @@ exports.create = async (req, res, next) => {
       }
 
       // 2.사용자 등록
-      const res_user = await User.create(req.body, { transaction });
+      const create_user = await User.create(user_param, { transaction: t });
 
-      if (!res_user) {
+      if (!create_user) {
         throw "User creating Error";
       }
 
       // 3.그룹 테이블 마이리스트 추가
-      const group = {
-        grp_nm: "마이리스트(" + req.body.user_nm + ")",
-        user_cd: req.body.user_cd,
+      const grp_param = {
+        grp_nm: `마이리스트(${create_user.user_nm})`,
         is_mylist: "T",
+        user_cd: create_user.user_cd,
       };
-      const res_group = await Group.create(group, { transaction });
+      const create_grp = await Group.create(grp_param, { transaction: t });
 
-      if (!res_group) {
+      if (!create_grp) {
         throw "Group Creating Error";
       }
 
-      const user_group = {
-        grp_cd: res_group.grp_cd,
-        user_cd: req.body.user_cd,
-      };
       // 4.사용자 그룹 등록
-      const res_user_group = await UserGroup.create(user_group, {
-        transaction,
+      const user_grp_param = {
+        user_cd: create_user.user_cd,
+        grp_cd: create_grp.grp_cd,
+      };
+      const create_user_grp = await UserGroup.create(user_grp_param, {
+        transaction: t,
       });
 
-      if (!res_user_group) {
+      if (!create_user_grp) {
         throw "UserGroup Creating Error";
       }
 
-      res.send(res_user);
+      const res_data = create_user_grp;
+      res.send(res_data);
     });
-  } catch (error) {
-    res.status(500).send({
-      message: error.message || "Some error occurred while creating the User.",
-    });
+
+    // 트랜잭션 문제없으면 알아서 자동으로 커밋
+  } catch (err) {
+    // 중간에 failed 나면 알아서 자동으로 트랜잭션 롤백
   }
 };
 // Retrieve all user from the database.

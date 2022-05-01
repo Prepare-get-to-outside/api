@@ -38,11 +38,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       // Model attributes are defined here
       grp_cd: {
-        type: DataTypes.STRING(20),
-        // type: DataTypes.INTEGER,
+        // type: DataTypes.STRING(20),
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4, // Or DataTypes.UUIDV1
         allowNull: false,
         primaryKey: true,
-        // autoIncrement: true,
       },
       grp_nm: {
         type: DataTypes.STRING(30),
